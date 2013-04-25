@@ -1,0 +1,2 @@
+class MissingIntegerException < Exception
+end
