@@ -1,6 +1,9 @@
 require_relative 'error/missing_integer_exception'
+require_relative 'core_ext/integer'
+require_relative 'core_ext/array'
+require_relative 'multiplication_printer'
 
-class PrimeNumbers  
+class PrimeNumbers
   attr_accessor :prime_numbers
 
   @@prime_numbers = []
@@ -11,7 +14,7 @@ class PrimeNumbers
 
   def generate number_of_primes
     unless number_of_primes.class == Fixnum && number_of_primes > 0
-      raise MissingIntegerException, "#{number_of_primes} is not an positive integer" 
+      raise MissingIntegerException, "#{number_of_primes} is not an positive integer"
     end
 
     @prime_numbers = []
@@ -26,12 +29,7 @@ class PrimeNumbers
   end
 
   def print_multiplication_table
-    table = "\t#{@prime_numbers.join("\t")}\n"
-    @prime_numbers.each do |row_number|
-      row = @prime_numbers.map {|x| x * row_number}
-      table << "#{row_number}\t#{row.join("\t")}\n"
-    end
-    puts table
+    puts MultiplicationPrinter.prepare_print(@prime_numbers)
   end
 
   def prime? number
@@ -48,23 +46,5 @@ class PrimeNumbers
         return false
       end
     end
-  end
-end
-
-class Integer < Numeric
-  def is_prime?
-    return false if self <= 1
-    2.upto(Math.sqrt(self).to_i) do |x|
-        return false if self % x == 0
-    end 
-    true
-  end
-end
-
-class Array
-  def print_multiplication_table
-    primes = PrimeNumbers.new
-    primes.prime_numbers = self
-    primes.print_multiplication_table 
   end
 end

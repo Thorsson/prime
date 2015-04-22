@@ -5,8 +5,15 @@ require_relative "lib/prime_numbers.rb"
 require_relative "lib/error/missing_integer_exception.rb"
 
 begin
-  NUMBER_OF_PRIMES = ARGV.first.nil? ? 10 : Integer(ARGV.first)
-rescue 
+  if ARGV.count == 2 &&
+     ARGV.first == '--count'
+
+    value = ARGV[1]
+    NUMBER_OF_PRIMES = value.nil? ? 10 : Integer(value)
+  else
+    NUMBER_OF_PRIMES = 10
+  end
+rescue
   NUMBER_OF_PRIMES = 10
 end
 
